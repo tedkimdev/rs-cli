@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 mod models;
 mod db;
+mod ui;
 
 use models::*;
 
