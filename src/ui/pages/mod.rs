@@ -10,6 +10,9 @@ use crate::models::Action;
 mod page_helpers;
 use page_helpers::*;
 
+mod prompts;
+use prompts::*;
+
 pub trait Page {
     fn draw_page(&self) -> Result<()>;
     fn handle_input(&self, input: &str) -> Result<Option<Action>>;
@@ -22,8 +25,6 @@ impl Page for HomePage {
     fn draw_page(&self) -> Result<()> {
         println!("----------------------------- EPICS -----------------------------");
         println!("     id     |               name               |      status      ");
-
-        // TODO: print out epics using get_column_string(). also make sure the epics are sorted by id
 
         let db_state = self.db.read_db()?;
         for (id, epic) in db_state.epics
@@ -73,7 +74,6 @@ impl Page for EpicDetail {
         println!("------------------------------ EPIC ------------------------------");
         println!("  id  |     name     |         description         |    status    ");
 
-        // TODO: print out epic details using get_column_string()
         println!("{} | {} | {} | {}", self.epic_id, get_column_string(&epic.name, 20), get_column_string(&epic.description, 20), epic.status);
   
         println!();
@@ -83,7 +83,6 @@ impl Page for EpicDetail {
 
         let stories = &db_state.stories;
 
-        // TODO: print out stories using get_column_string(). also make sure the stories are sorted by id
         for (id, story) in db_state.stories
             .iter()
             .sorted_by_key(|(id, _)| *id) {
@@ -216,7 +215,7 @@ mod tests {
             let epic_id = db.create_epic(Epic::new("".to_owned(), "".to_owned())).unwrap();
 
             let page = EpicDetail { epic_id, db };
-            assert_eq!(page.draw_page().is_ok(), true);
+            assert!(page.draw_page().is_ok());
         }
 
         #[test]
@@ -225,7 +224,7 @@ mod tests {
             let epic_id = db.create_epic(Epic::new("".to_owned(), "".to_owned())).unwrap();
 
             let page = EpicDetail { epic_id, db };
-            assert_eq!(page.handle_input("").is_ok(), true);
+            assert!(page.handle_input("").is_ok());
         }
 
         #[test]
@@ -277,7 +276,7 @@ mod tests {
             let story_id = db.create_story(Story::new("".to_owned(), "".to_owned()), epic_id).unwrap();
 
             let page = StoryDetail { epic_id, story_id, db };
-            assert_eq!(page.draw_page().is_ok(), true);
+            assert!(page.draw_page().is_ok());
         }
 
         #[test]
@@ -288,7 +287,7 @@ mod tests {
             let story_id = db.create_story(Story::new("".to_owned(), "".to_owned()), epic_id).unwrap();
 
             let page = StoryDetail { epic_id, story_id, db };
-            assert_eq!(page.handle_input("").is_ok(), true);
+            assert!(page.handle_input("").is_ok());
         }
 
         #[test]
@@ -299,7 +298,7 @@ mod tests {
             let _ = db.create_story(Story::new("".to_owned(), "".to_owned()), epic_id).unwrap();
 
             let page = StoryDetail { epic_id, story_id: 999, db };
-            assert_eq!(page.draw_page().is_err(), true);
+            assert!(page.draw_page().is_err());
         }
 
         #[test]
