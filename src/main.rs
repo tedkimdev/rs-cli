@@ -1,11 +1,12 @@
-mod models;
-
 use std::collections::HashMap;
+
+mod models;
+mod db;
 
 use models::*;
 
 fn main() {
-    let mut db = DBState {
+    let mut db_state = DBState {
         last_item_id: 0,
         epics: HashMap::new(),
         stories: HashMap::new(),
@@ -14,8 +15,8 @@ fn main() {
     let epic = Epic::new("project 1".to_string(), "This is project 1".to_string());
     let story = Story::new("story 1".to_string(), "This is story 1".to_string());
 
-    db.epics.insert(epic.id, epic);
-    db.stories.insert(story.id, story);
+    db_state.epics.insert(1, epic);
+    db_state.stories.insert(2, story);
 
-    println!("{:?}", db);
+    println!("{:?}", db_state);
 }
