@@ -25,7 +25,7 @@ impl Page for EpicDetail {
         println!("------------------------------ EPIC ------------------------------");
         println!("  id  |     name     |         description         |    status    ");
 
-        println!("{} | {} | {} | {}", self.epic_id, get_column_string(&epic.name, 20), get_column_string(&epic.description, 20), epic.status);
+        println!("{:^5} | {:<12} | {:<27} | {:^18}", self.epic_id, get_column_string(&epic.name, 12), get_column_string(&epic.description, 27), epic.status);
   
         println!();
 
@@ -37,7 +37,7 @@ impl Page for EpicDetail {
         for (id, story) in stories
             .iter()
             .sorted_by_key(|(id, _)| *id) {
-            println!("{} | {} | {} | {}", id, get_column_string(&story.name, 20), get_column_string(&story.description, 20), story.status);
+            println!("{:2^11} | {:<32} | {:^18}", id, get_column_string(&story.name, 32), story.status);
         }
 
         println!();

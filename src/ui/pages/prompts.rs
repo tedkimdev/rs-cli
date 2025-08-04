@@ -48,7 +48,7 @@ fn delete_epic_prompt() -> bool {
 
 fn delete_story_prompt() -> bool {
     println!("----------------------------");
-    print!("Are you sure you want to delete this story? [Y/n]: ");
+    println!("Are you sure you want to delete this story? [Y/n]: ");
     get_user_input() == "Y"
 }
 

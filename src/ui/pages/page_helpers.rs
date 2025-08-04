@@ -11,8 +11,8 @@ pub fn get_column_string(text: &str, width: usize) -> String {
     if text.len() <= width {
         return text.to_string() + &" ".repeat(width - text.len());
     }
-    let ellipsed = text.truncate_ellipse(3);
-    ellipsed.to_string().trim().to_string()
+    let ellipsed = text.truncate_ellipse(width-3);
+    ellipsed.to_string()
 }
 
 #[cfg(test)]

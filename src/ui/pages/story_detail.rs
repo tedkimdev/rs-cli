@@ -17,7 +17,7 @@ impl Page for StoryDetail {
     fn as_any(&self) -> &dyn std::any::Any {
         self
     }
-    
+
     fn draw_page(&self) -> Result<()> {
         let db_state = self.db.read_db()?;
         let story = db_state.stories.get(&self.story_id).ok_or_else(|| anyhow!("could not find story!"))?;
@@ -25,10 +25,8 @@ impl Page for StoryDetail {
         println!("------------------------------ STORY ------------------------------");
         println!("  id  |     name     |         description         |    status    ");
         
-        // TODO: print out story details using get_column_string()
-        println!("{} | {} | {} | {}", self.story_id, get_column_string(&story.name, 20), get_column_string(&story.description, 20), story.status);
+        println!("{:^5} | {:<12} | {:<27} | {:^18}", self.story_id, get_column_string(&story.name, 12), get_column_string(&story.description, 27), story.status);
 
-        println!();
         println!();
 
         println!("[p] previous | [u] update story | [d] delete story");

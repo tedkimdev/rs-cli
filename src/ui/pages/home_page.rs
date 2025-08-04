@@ -15,7 +15,7 @@ impl Page for HomePage {
     fn as_any(&self) -> &dyn std::any::Any {
         self
     }
-    
+
     fn draw_page(&self) -> Result<()> {
         println!("----------------------------- EPICS -----------------------------");
         println!("     id     |               name               |      status      ");
@@ -24,7 +24,7 @@ impl Page for HomePage {
         for (id, epic) in db_state.epics
             .iter()
             .sorted_by_key(|(id, _)| *id){
-            println!("{} | {} | {} ", id, epic.name, epic.status);
+            println!("{:^11} | {:<32} | {:^18} ", id, epic.name, epic.status);
         }
 
 
